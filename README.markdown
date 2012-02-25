@@ -1,4 +1,4 @@
-# Resin: a simple environment for A,ber development
+# Resin: a simple environment for Amber development
 
 
 ## About
