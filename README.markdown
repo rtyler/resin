@@ -33,3 +33,20 @@ once they're created, just run Resin and navigate to
     % runresin
 
 
+## Custom Views
+
+Adding custom views is pretty easy, just create the `views` directory and start
+adding [HAML](http://haml-lang.com) files into it. If for example if you wanted
+to create a URL [localhost:4567/user](http://localhost:4567/user) then you
+would create `views/user.haml` and fill in your template accordingly.
+
+To embed the Amber JavaScripts in your custom views, you can just call the
+`embed_amber` function:
+
+    %html
+        %head
+            %title
+                My Custom View
+            = embed_amber
+        %body
+            Hello World
