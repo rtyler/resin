@@ -76,7 +76,6 @@ module Resin
 
       # Only enable the saving mechanism in test/development
       put '*' do
-        puts "Trying #{request.path}"
         unless request.body.nil?
           path = File.join(Dir.pwd, request.path)
           puts ">> Commiting changes to #{path}"
