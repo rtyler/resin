@@ -1,0 +1,16 @@
+%html
+  %head
+    %title
+      Resin
+    %script{:type => "text/javascript", :src => "/js/amber.js"}
+    %script{:type => "text/javascript"}
+      loadAmber({
+      files: [#{javascript_files}],
+      prefix: '',
+      ready: function() {
+      }});
+  %body
+    - if Resin.development?
+      %div{:style => 'float: right; clear: all'}
+        %button{:onclick => "smalltalk.Browser._open();"}
+          Run IDE
