@@ -12,6 +12,7 @@ project directory
 
 ## Getting Started
 
+Read further, or you could just [watch this fanciful screencast](http://youtu.be/9NHCGJxQKlA)
 
 First you'll need to install the Gem and make your project directory:
 
