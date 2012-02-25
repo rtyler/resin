@@ -9,7 +9,7 @@ spec = Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.summary = %q{A tool for building Amber applications with Ruby}
   s.files = Dir['bin/*'] + Dir['lib/**/*.rb'] + Dir['lib/**/*.haml'] + Dir['amber/css/*'] +
-            Dir['amber/js/*'] + Dir['amber/st/*'] + Dir['amber/images/*']
+            Dir['amber/js/**/*'] + Dir['amber/st/**/*.st'] + Dir['amber/images/*']
   s.bindir = 'bin'
   s.executables = ['runresin']
   s.has_rdoc = true
