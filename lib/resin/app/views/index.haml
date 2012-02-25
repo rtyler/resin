@@ -2,13 +2,7 @@
   %head
     %title
       Resin
-    %script{:type => "text/javascript", :src => "/js/amber.js"}
-    %script{:type => "text/javascript"}
-      loadAmber({
-      files: [#{javascript_files}],
-      prefix: '',
-      ready: function() {
-      }});
+    = embed_amber
   %body
     - if Resin.development?
       %div{:style => 'float: right; clear: all'}

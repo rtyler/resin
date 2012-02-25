@@ -27,6 +27,18 @@ module Resin
           super(view, name, engine, &block)
         end
       end
+
+      def embed_amber
+        return <<-END
+          <script type="text/javascript" src="/js/amber.js"></script>
+          <script type="text/javascript">
+            loadAmber({
+              files : [#{javascript_files}],
+              ready : function() { }
+            });
+          </script>
+        END
+      end
     end
 
     def javascript_files
