@@ -8,9 +8,10 @@ spec = Gem::Specification.new do |s|
   s.homepage = "https://github.com/rtyler/resin"
   s.platform = Gem::Platform::RUBY
   s.summary = %q{A tool for building Amber applications with Ruby}
-  s.files = Dir['lib/**/*.rb'] + Dir['lib/**/*.haml'] + Dir['amber/css/*'] +
+  s.files = Dir['bin/*'] + Dir['lib/**/*.rb'] + Dir['lib/**/*.haml'] + Dir['amber/css/*'] +
             Dir['amber/js/*'] + Dir['amber/st/*'] + Dir['amber/images/*']
   s.bindir = 'bin'
+  s.executables = ['runresin']
   s.has_rdoc = true
   s.extra_rdoc_files = ["README.markdown"]
 
