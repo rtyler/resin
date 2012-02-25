@@ -1,5 +1,12 @@
 #!/usr/bin/env ruby
 
-require File.expand_path(File.dirname(__FILE__) + "/../lib/app/app.rb")
+begin
+  require 'resin/app/app.rb'
+rescue LoadError => e
+  require 'rubygems'
+  path = File.expand_path '../../lib', __FILE__
+  $:.unshift(path) if File.directory?(path) && !$:.include?(path)
+  require 'resin/app/app.rb'
+end
 
 Resin::Server.run!
