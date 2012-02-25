@@ -19,6 +19,16 @@ module Resin
     set :dump_errors, true
     set :views,  File.expand_path('../views', __FILE__)
 
+    set :views, [File.join(Dir.pwd, 'views'), File.expand_path('../views', __FILE__)]
+
+    helpers do
+      def find_template(views, name, engine, &block)
+        Array(views).each do |view|
+          super(view, name, engine, &block)
+        end
+      end
+    end
+
     def javascript_files
       files = []
       Dir.glob("#{Dir.pwd}/js/*.js") do |filename|
@@ -31,6 +41,14 @@ module Resin
 
     get '/' do
       haml :index
+    end
+
+    get '/:view' do |view|
+      begin
+        haml view.to_sym
+      rescue ::Errno::ENOENT
+        halt 404, 'Not found'
+      end
     end
 
     def load_resource(prefix, filename)
@@ -64,7 +82,7 @@ module Resin
         content_type_for_ext filename
         data = load_resource(path, filename)
         if data.nil?
-          halt 404
+          halt 404, 'Not found'
         end
         data
       end
