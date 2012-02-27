@@ -17,6 +17,7 @@ module Resin
 
   class Server < Sinatra::Base
     set :dump_errors, true
+    set :port, ENV['PORT'] || 4567
     set :views,  File.expand_path('../views', __FILE__)
 
     set :views, [File.join(Dir.pwd, 'views'), File.expand_path('../views', __FILE__)]
