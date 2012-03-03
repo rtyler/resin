@@ -24,10 +24,15 @@ module Resin
     end
 
     def embed_amber
+      deploy_line = ''
+      unless Resin.development?
+        deploy_line = "deploy: true,"
+      end
       return <<-END
         <script type="text/javascript" src="/js/amber.js"></script>
         <script type="text/javascript">
           loadAmber({
+            #{deploy_line}
             files : [#{javascript_files}],
             ready : function() { }
           });
