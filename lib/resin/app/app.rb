@@ -56,7 +56,12 @@ module Resin
       # Only enable the saving mechanism in test/development
       put '*' do
         unless request.body.nil?
-          path = File.join(Dir.pwd, request.path)
+          filename = request.path.split('/')[-1]
+          directory = '/st/'
+          if filename.end_with? '.js'
+            directory = '/js/'
+          end
+          path = File.join(Dir.pwd, directory, filename)
           puts ">> Commiting changes to #{path}"
           File.open(path, 'w') do |fd|
             request.body.each do |line|
