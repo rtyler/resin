@@ -23,11 +23,14 @@ module Resin
       end
     end
 
-    def embed_amber
+    def embed_amber(options={})
       deploy_line = ''
       unless Resin.development?
         deploy_line = "deploy: true,"
       end
+
+      on_ready_function = options[:on_ready] || ''
+
       return <<-END
         <script type="text/javascript" src="/js/amber.js"></script>
         <script type="text/javascript">
@@ -35,7 +38,7 @@ module Resin
             #{deploy_line}
             files : [#{javascript_files}],
             prefix : 'js',
-            ready : function() { }
+            ready : function() { #{on_ready_function} }
           });
         </script>
       END
