@@ -34,6 +34,7 @@ module Resin
           loadAmber({
             #{deploy_line}
             files : [#{javascript_files}],
+            prefix : 'js',
             ready : function() { }
           });
         </script>
