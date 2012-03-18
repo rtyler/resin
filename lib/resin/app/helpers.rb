@@ -9,7 +9,11 @@ module Resin
             files << "\"#{File.basename(filename)}\""
           end
         else
-          if filename.include? 'deploy'
+          unless filename.include? 'deploy'
+            next
+          end
+
+          unless filename.include? '-Tests'
             files << "\"#{File.basename(filename)}\""
           end
         end

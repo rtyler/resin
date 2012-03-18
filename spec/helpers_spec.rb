@@ -30,5 +30,16 @@ describe Resin::Helpers do
       Dir.stub(:glob).and_yield('hello.deploy.js').and_yield('ignore.js')
       javascript_files.should == '"hello.deploy.js"'
     end
+
+    it 'should exclude -Tests files when in production' do
+      Resin.stub(:development?).and_return(false)
+      Dir.stub(:glob).and_yield('Hello-Tests.deploy.js').and_yield('Hello.deploy.js')
+      javascript_files.should == '"Hello.deploy.js"'
+
+    end
+
+    context 'when there are resin drops available' do
+
+    end
   end
 end
