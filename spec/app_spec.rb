@@ -27,7 +27,7 @@ describe Resin do
       Resin.development?.should be false
     end
 
-    it 'should be true when in develokpment' do
+    it 'should be true when in development' do
       Resin.should_receive(:env).and_return('development')
       Resin.development?.should be true
     end
