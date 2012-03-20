@@ -4,7 +4,7 @@ require 'haml'
 
 require File.expand_path(File.dirname(__FILE__) + '/helpers.rb')
 
-AMBER_PATH = File.expand_path('../../../../amber', __FILE__)
+AMBER_PATH = File.expand_path('../../../amber', __FILE__)
 
 module Resin
   def env

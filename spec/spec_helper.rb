@@ -2,8 +2,8 @@ require 'rubygems'
 require 'rspec'
 require 'rack/test'
 
-require File.join(File.dirname(__FILE__), "/../lib/resin/app/app.rb")
-require File.join(File.dirname(__FILE__), "/../lib/resin/app/helpers.rb")
+require File.join(File.dirname(__FILE__), "/../lib/resin/app.rb")
+require File.join(File.dirname(__FILE__), "/../lib/resin/helpers.rb")
 
 Sinatra::Base.set :environment, :test
 Sinatra::Base.set :run, false
