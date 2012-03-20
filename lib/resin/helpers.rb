@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'json'
 
 module Resin
   module Helpers
@@ -6,7 +8,7 @@ module Resin
       Dir.glob("#{Dir.pwd}/js/*.js") do |filename|
         if Resin.development?
           unless filename.include? 'deploy'
-            files << "\"#{File.basename(filename)}\""
+            files << File.basename(filename)
           end
         else
           unless filename.include? 'deploy'
@@ -14,11 +16,11 @@ module Resin
           end
 
           unless filename.include? '-Tests'
-            files << "\"#{File.basename(filename)}\""
+            files << File.basename(filename)
           end
         end
       end
-      files.join(',')
+      files
     end
 
     def find_template(views, name, engine, &block)
@@ -40,7 +42,7 @@ module Resin
         <script type="text/javascript">
           loadAmber({
             #{deploy_line}
-            files : [#{javascript_files}],
+            files : #{JSON.dump(javascript_files)}},
             prefix : 'js',
             ready : function() { #{on_ready_function} }
           });
