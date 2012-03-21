@@ -4,6 +4,9 @@ describe Resin::Helpers do
   include Resin::Helpers
 
   describe '#javascript_files' do
+    # Stub out the #drops method for these tests
+    let(:drops) { [] }
+
     it 'should return an empty string if there are no files' do
       Dir.stub(:glob)
       javascript_files.should be_instance_of(Array)
@@ -35,11 +38,23 @@ describe Resin::Helpers do
       Resin.stub(:development?).and_return(false)
       Dir.stub(:glob).and_yield('Hello-Tests.deploy.js').and_yield('Hello.deploy.js')
       javascript_files.should == ["Hello.deploy.js"]
+    end
+  end
 
+  describe '#drops' do
+    before :each do
+      Resin::Helpers.flush_drops
+    end
+    it 'should return nil if there are no drops available' do
+      Dir.stub(:glob)
+      drops.should be_instance_of(Array)
+      drops.should be_empty
     end
 
-    context 'when there are resin drops available' do
-
+    it 'should load globbed drop.yaml files' do
+      Dir.should_receive(:glob).and_yield('drop.yaml')
+      should_receive(:load_drop_file).with('drop.yaml')
+      drops.should_not be_nil
     end
   end
 end

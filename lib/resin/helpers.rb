@@ -1,25 +1,45 @@
 require 'rubygems'
 require 'json'
+require 'yaml'
 
 module Resin
   module Helpers
+    def self.append_js_file(filename, to_array)
+      filename = File.basename(filename)
+
+      if Resin.development?
+        unless filename.include? 'deploy'
+          to_array << filename
+        end
+        return
+      end
+
+      if (filename.include? 'deploy') && !(filename.include? '-Tests')
+        to_array << filename
+      end
+    end
+
     def javascript_files
       files = []
-      Dir.glob("#{Dir.pwd}/js/*.js") do |filename|
-        if Resin.development?
-          unless filename.include? 'deploy'
-            files << File.basename(filename)
-          end
-        else
-          unless filename.include? 'deploy'
-            next
-          end
 
-          unless filename.include? '-Tests'
-            files << File.basename(filename)
+      # First our project's files take precedence
+      Dir.glob("#{Dir.pwd}/js/*.js") do |filename|
+        Resin::Helpers.append_js_file(filename, files)
+      end
+
+      # Then our drops get loaded
+      drops.each do |drop|
+        unless drop[:meta]
+          next
+        end
+
+        if drop[:js]
+          drop[:js].each do |filename|
+            Resin::Helpers.append_js_file(filename, files)
           end
         end
       end
+
       files
     end
 
@@ -42,7 +62,7 @@ module Resin
         <script type="text/javascript">
           loadAmber({
             #{deploy_line}
-            files : #{JSON.dump(javascript_files)}},
+            files : #{JSON.dump(javascript_files)},
             prefix : 'js',
             ready : function() { #{on_ready_function} }
           });
@@ -73,6 +93,34 @@ module Resin
         content_type 'text/css'
       else
         content_type 'text/plain'
+      end
+    end
+
+    def load_drop_file(filepath)
+      YAML::load(File.open(filepath).read)
+    end
+
+    def self.flush_drops
+      @@drops = nil
+    end
+
+    def drops
+      @@drops ||= begin
+        drops_path = File.join(Dir.pwd, 'drops')
+        loaded = []
+        Dir.glob("#{drops_path}/*/drop.yml") do |filename|
+          drop = load_drop_file(filename)
+          if drop.nil? or drop.empty?
+            next
+          end
+          drop_dir = File.dirname(filename)
+          puts ">>> Loading Resin Drop: #{drop['drop']['name']}"
+          loaded << {:meta => drop['drop'],
+                    :js => Dir[File.join(drop_dir, 'js', '*.js')],
+                    :st => Dir[File.join(drop_dir, 'st', '*.st')]
+                    }
+        end
+        loaded
       end
     end
   end
