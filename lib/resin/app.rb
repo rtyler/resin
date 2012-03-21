@@ -42,9 +42,14 @@ module Resin
       get "/#{path}/*" do |filename|
         content_type_for_ext filename
         data = load_resource(path, filename)
+        if data.nil? and path == 'js'
+          data = load_drop_resource(filename)
+        end
+
         if data.nil?
           halt 404, 'Not found'
         end
+
         data
       end
     end
@@ -61,7 +66,15 @@ module Resin
           if filename.end_with? '.js'
             directory = '/js/'
           end
-          path = File.join(Dir.pwd, directory, filename)
+
+          root_dir = Dir.pwd
+
+          if drops_filemap[filename]
+            drop_name = drops_filemap[filename]
+            root_dir = drops_map[drop_name]
+          end
+
+          path = File.join(root_dir, directory, filename)
           puts ">> Commiting changes to #{path}"
           File.open(path, 'w') do |fd|
             request.body.each do |line|

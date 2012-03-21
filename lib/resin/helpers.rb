@@ -86,6 +86,22 @@ module Resin
       end
     end
 
+    def load_drop_resource(filename)
+      drops.each do |drop|
+        if drop.nil? or drop.empty? or drop[:js].empty?
+          next
+        end
+
+        drop[:js].each do |drop_filepath|
+          drop_filename = File.basename(drop_filepath)
+          if filename == drop_filename
+            return File.open(drop_filepath).read
+          end
+        end
+      end
+      nil
+    end
+
     def content_type_for_ext(filename)
       if File.extname(filename) == '.js'
         content_type 'application/javascript'
@@ -102,10 +118,22 @@ module Resin
 
     def self.flush_drops
       @@drops = nil
+      @@drops_map = {}
+      @@drops_filemap = {}
+    end
+
+    def drops_map
+      @@drops_map
+    end
+
+    def drops_filemap
+      @@drops_filemap
     end
 
     def drops
       @@drops ||= begin
+        @@drops_map ||= {}
+        @@drops_filemap ||= {}
         drops_path = File.join(Dir.pwd, 'drops')
         loaded = []
         Dir.glob("#{drops_path}/*/drop.yml") do |filename|
@@ -114,11 +142,23 @@ module Resin
             next
           end
           drop_dir = File.dirname(filename)
-          puts ">>> Loading Resin Drop: #{drop['drop']['name']}"
-          loaded << {:meta => drop['drop'],
+          name = drop['drop']['name']
+          puts ">>> Loading Resin Drop: #{name}"
+
+          data = {:meta => drop['drop'],
                     :js => Dir[File.join(drop_dir, 'js', '*.js')],
                     :st => Dir[File.join(drop_dir, 'st', '*.st')]
                     }
+          loaded << data
+
+          @@drops_map[name] = drop_dir
+
+          data[:js].each do |js|
+            @@drops_filemap[File.basename(js)] = name
+          end
+          data[:st].each do |st|
+            @@drops_filemap[File.basename(st)] = name
+          end
         end
         loaded
       end
