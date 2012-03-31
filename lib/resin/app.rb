@@ -26,6 +26,11 @@ module Resin
       include Resin::Helpers
     end
 
+    before do
+      # Make sure drops are loaded
+      drops
+    end
+
     get '/' do
       haml :index
     end
