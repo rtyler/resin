@@ -1,5 +1,7 @@
 # Resin: a simple environment for Amber development
 
+[![Build Status](https://buildhive.cloudbees.com/job/rtyler/job/resin/badge/icon)](https://buildhive.cloudbees.com/job/rtyler/job/resin/)
+
 
 ## About
 
