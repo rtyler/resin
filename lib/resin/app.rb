@@ -35,7 +35,7 @@ module Resin
       haml :index
     end
 
-    get '/:view' do |view|
+    get '/:view/?' do |view|
       begin
         haml view.to_sym
       rescue ::Errno::ENOENT
