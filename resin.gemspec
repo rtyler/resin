@@ -2,7 +2,7 @@
 
 spec = Gem::Specification.new do |s|
   s.name = 'resin'
-  s.version = '0.2.2'
+  s.version = '0.2.3'
   s.author = "R. Tyler Croy"
   s.email = "tyler@linux.com"
   s.homepage = "https://github.com/rtyler/resin"
@@ -21,7 +21,6 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency "rspec"
   s.add_development_dependency "rack-test"
 
-  s.add_dependency 'thin'
   s.add_dependency 'haml'
   s.add_dependency 'sinatra'
   s.add_dependency 'json'
