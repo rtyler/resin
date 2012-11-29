@@ -1,9 +1,8 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
-
-describe Resin do
+describe Sinatra::Resin do
   def app
-    Resin::Server
+    FakeApp
   end
 
   it 'generates an index page' do
@@ -23,18 +22,18 @@ describe Resin do
 
   describe '#development?' do
     it 'should be false when in production' do
-      Resin.should_receive(:env).and_return('production')
-      Resin.development?.should be false
+      Sinatra::Resin.should_receive(:env).and_return('production')
+      Sinatra::Resin.development?.should be false
     end
 
     it 'should be true when in development' do
-      Resin.should_receive(:env).and_return('development')
-      Resin.development?.should be true
+      Sinatra::Resin.should_receive(:env).and_return('development')
+      Sinatra::Resin.development?.should be true
     end
 
     it 'should be true by default (i.e. no RACK_ENV)' do
-      Resin.should_receive(:env).and_return(nil)
-      Resin.development?.should be true
+      Sinatra::Resin.should_receive(:env).and_return(nil)
+      Sinatra::Resin.development?.should be true
     end
   end
 end

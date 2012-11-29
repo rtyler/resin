@@ -4,7 +4,7 @@
       Resin
     = embed_amber
   %body
-    - if Resin.development?
+    - if development?
       %div{:style => 'float: right; clear: all'}
         %button{:onclick => "smalltalk.Browser._open();"}
           Run IDE

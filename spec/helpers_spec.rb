@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper'
 
-describe Resin::Helpers do
-  include Resin::Helpers
+describe Sinatra::Resin::Helpers do
+  include Sinatra::Resin::Helpers
 
   describe '#javascript_files' do
     # Stub out the #drops method for these tests
@@ -29,13 +29,13 @@ describe Resin::Helpers do
     end
 
     it 'should only include deploy files when in production' do
-      Resin.stub(:development?).and_return(false)
+      Sinatra::Resin.stub(:development?).and_return(false)
       Dir.stub(:glob).and_yield('hello.deploy.js').and_yield('ignore.js')
       javascript_files.should == ["hello.deploy.js"]
     end
 
     it 'should exclude -Tests files when in production' do
-      Resin.stub(:development?).and_return(false)
+      Sinatra::Resin.stub(:development?).and_return(false)
       Dir.stub(:glob).and_yield('Hello-Tests.deploy.js').and_yield('Hello.deploy.js')
       javascript_files.should == ["Hello.deploy.js"]
     end
@@ -43,8 +43,9 @@ describe Resin::Helpers do
 
   describe '#drops' do
     before :each do
-      Resin::Helpers.flush_drops
+      Sinatra::Resin::Helpers.flush_drops
     end
+
     it 'should return nil if there are no drops available' do
       Dir.stub(:glob)
       drops.should be_instance_of(Array)
