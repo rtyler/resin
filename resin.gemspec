@@ -2,7 +2,7 @@
 
 spec = Gem::Specification.new do |s|
   s.name = 'resin'
-  s.version = '0.3.1'
+  s.version = '0.4.0'
   s.author = "R. Tyler Croy"
   s.email = "tyler@linux.com"
   s.homepage = "https://github.com/rtyler/resin"
