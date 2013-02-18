@@ -1,5 +1,3 @@
-source :gemcutter
-
-gem 'gemcutter'
+source 'https://rubygems.org'
 
 gemspec
