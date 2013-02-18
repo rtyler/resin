@@ -1,0 +1,6 @@
+#!/usr/env/bin ruby
+
+require 'rubygems'
+require 'resin/cli'
+
+Resin::CLI.start

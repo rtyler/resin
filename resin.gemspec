@@ -11,7 +11,7 @@ spec = Gem::Specification.new do |s|
   s.files = Dir['bin/*'] + Dir['lib/**/*.rb'] + Dir['lib/**/*.haml'] + Dir['amber/css/*'] +
             Dir['amber/js/**/*'] + Dir['amber/st/**/*.st'] + Dir['amber/images/*'] + ['amber/bin/amberc', 'amber/bin/nodecompile.js']
   s.bindir = 'bin'
-  s.executables = ['runresin', 'resin-compile']
+  s.executables = ['resin']
   s.has_rdoc = true
   s.extra_rdoc_files = ["README.markdown"]
 
